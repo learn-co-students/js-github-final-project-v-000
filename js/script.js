@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  // submitForm();
+
 });
 
 
@@ -16,7 +16,6 @@ function createIssue(repoName,repoOwner,title,content){
   var data = {
     'title': title,
     'body': content,
-    // 'assignee': repoOwner
   }
 
   $.ajax({
@@ -64,6 +63,3 @@ function submitForm(){
 function handleError(xhr, textStatus, error) {
   console.log('Post error: ' + error);
 }
-
-
-// Issue.prototype.
