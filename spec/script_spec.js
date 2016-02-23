@@ -25,8 +25,8 @@ describe('#createIssue', function() {
   it('sends the correct data', function() {
     expectedData = {
       'title':   "BIG ISSUE",
-      'body': 'the biggest issue ever!!', 
-    }
+      'body': 'the biggest issue ever!!',
+    };
     spyOn(JSON, 'stringify');
     var repoName = "temp";
     var repoOwner = "blake41";
@@ -52,19 +52,19 @@ describe('handleResponse', function(){
 describe('handleResponse', function(){
   it("handleResponse callback function is called", function() {
     jasmine.Ajax.withMock(function() {
-      spyOn(window, "handleResponse")
+      spyOn(window, "handleResponse");
       expect(window.handleResponse).not.toHaveBeenCalled();
       createIssue("temp", "blake41", "BIG ISSUE", "the biggest issue ever!!");
       var data = {
         "html_url": 'someurl',
         "title": "BIG ISSUE",
         "body": "the biggest issue ever!!"
-      }
+      };
       var response = {
-        "status": 200, 
+        "status": 200,
         "contentType": 'application/json',
         "responseText" : JSON.stringify(data)
-      }
+      };
       jasmine.Ajax.requests.mostRecent().respondWith(response);
       expect(window.handleResponse).toHaveBeenCalled();
     });
@@ -74,15 +74,15 @@ describe('handleResponse', function(){
 describe('handleError', function(){
   it("handleError callback function is called", function() {
     jasmine.Ajax.withMock(function() {
-      spyOn(window, "handleError")
+      spyOn(window, "handleError");
       expect(window.handleError).not.toHaveBeenCalled();
       createIssue("temp", "blake41", "BIG ISSUE", "the biggest issue ever!!");
       var response = {
-        "status": 401, 
+        "status": 401,
         "contentType": 'text/plain',
         "responseText" : "unauth",
         "statusText": "Unathorized"
-      }
+      };
       jasmine.Ajax.requests.mostRecent().respondWith(response);
       expect(window.handleError).toHaveBeenCalled();
     });
@@ -93,9 +93,9 @@ describe('handleError', function(){
   it("logs error to the console", function() {
     console.log = jasmine.createSpy("log");
     var errorThrown = "Unauthorized";
-    var textStatus = "error"
-    var jqXHR = {}
-    handleError(jqXHR, textStatus, errorThrown)
+    var textStatus = "error";
+    var jqXHR = {};
+    handleError(jqXHR, textStatus, errorThrown);
     expect(console.log).toHaveBeenCalledWith("Post error: " + errorThrown);
   });
 })
