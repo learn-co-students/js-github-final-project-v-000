@@ -35,3 +35,18 @@ function createIssue(repoName,repoOwner, title, body){
     data: JSON.stringify(data)
   }).done(handleResponse).fail(handleError);
 };
+
+function submitButton(){
+  $('input[type=submit').click(function(){
+    var repoName = $('#repoName').val();
+    var repoOwner = $('#repoOwner').val();
+    var title = $('#title').val();
+    var body = $('#body').val();
+    event.preventDefault();
+    createIssue(repoName, repoOwner, title, body);
+  })
+}
+
+$(document).ready(function(){
+  submitButton();
+})
