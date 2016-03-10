@@ -2,7 +2,7 @@ function GithubInteractor(token){
   this.token = token;
 }
 
-var interactor = new GithubInteractor('7a8a3e764f4c30c4df65115e070b928073e0d35c');
+var interactor = new GithubInteractor('TOKEN_HERE');
 
 function createIssue(repoName,repoOwner,issueTitle,issueContent){
   var data = {
