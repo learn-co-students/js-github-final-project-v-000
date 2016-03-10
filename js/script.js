@@ -5,7 +5,10 @@ function GithubInteractor(token){
 var interactor = new GithubInteractor('7a8a3e764f4c30c4df65115e070b928073e0d35c');
 
 function createIssue(repoName,repoOwner,issueTitle,issueContent){
-  var data = {title: issueTitle, body: issueContent}
+  var data = {
+    title: issueTitle, 
+    body: issueContent
+  };
   $.ajax({
     url:'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues',
     type: "POST",
@@ -17,9 +20,8 @@ function createIssue(repoName,repoOwner,issueTitle,issueContent){
 }
 
 function handleResponse(response){
-  $('#issue').html('');
   $('#issue').append('<div class = issue_details>');
-  $('#issue').append('<h3>' + response.title + '</h3>');
+  $('#issue').append('<a href= "' + response.html_url + '" target="_blank">' + response.title + '</a>');
   $('#issue').append('</div>');
 }
 
@@ -27,6 +29,17 @@ function handleError(jqXHR, textStatus, errorThrown){
   debugger;
   console.log("Post error: " + errorThrown);
 }
+
+$('document').ready(function(){
+  $('form').on("submit",function(event){
+    var repoName = $('#repoName').val();
+    var repoOwner = $('#repoOwner').val();
+    var title = $('#title').val();
+    var body = $('#body').val();
+    createIssue(repoName,repoOwner, title, body);
+    event.preventDefault();
+  });
+});
 
 
 
