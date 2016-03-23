@@ -37,7 +37,7 @@ describe('#createIssue', function() {
 
 describe('handleResponse', function(){
   beforeEach(function(){
-    setFixtures('<body><div id="issue"></div></body>')
+    setFixtures('<body><div id="issue"><ol id="issue"></ol></div></body>')
   });
   it('renders the issue link on the page', function(){
     handleResponse({
@@ -45,7 +45,7 @@ describe('handleResponse', function(){
         "title": "BIG ISSUE",
         "body": "the biggest issue ever!!"
       })
-    expect($('#issue').text()).toEqual("BIG ISSUE");
+    expect($('ol#issue li').text()).toEqual("BIG ISSUE");
   });
 });
 
