@@ -28,7 +28,7 @@ function createIssue(repoName, repoOwner, title, body) {
     },
     data: JSON.stringify(data) })
     .done(handleResponse)
-    .error(handleError);
+    .fail(handleError);
 }
     
 function handleResponse(response){
