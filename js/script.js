@@ -36,12 +36,8 @@ function handleResponse(response){
   $('#issue').append("<p>" + response.title + "</p>");
 }
 
-function handleError(error){
-  if(Object.keys(error).length > 0){
-    console.log("we've got  an error");
-    var e = "Post error: " + error.statusText;
-    console.log(e);
-  }
+function handleError(jqXHR, textStatus, error){
+  console.log("Post error: " + error);
 }
 
 
