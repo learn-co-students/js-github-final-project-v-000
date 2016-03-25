@@ -7,7 +7,7 @@ function GithubInteractor(token){
   this.apiBaseUrl = "https://api.github.com/repos/";
 }
 
-var interactor = new GithubInteractor("c0c20f0e2c36bc772e8dc4027221f548064d0dcc");
+var interactor = new GithubInteractor("");
 
 function createIssue(repoName, repoOwner, title, body){
   var url = interactor.apiBaseUrl + repoOwner + "/" + repoName + "/issues";
