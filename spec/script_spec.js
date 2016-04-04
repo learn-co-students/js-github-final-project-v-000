@@ -25,7 +25,7 @@ describe('#createIssue', function() {
   it('sends the correct data', function() {
     expectedData = {
       'title':   "BIG ISSUE",
-      'body': 'the biggest issue ever!!', 
+      'body': 'the biggest issue ever!!',
     }
     spyOn(JSON, 'stringify');
     var repoName = "temp";
@@ -61,10 +61,11 @@ describe('handleResponse', function(){
         "body": "the biggest issue ever!!"
       }
       var response = {
-        "status": 200, 
+        "status": 200,
         "contentType": 'application/json',
         "responseText" : JSON.stringify(data)
       }
+
       jasmine.Ajax.requests.mostRecent().respondWith(response);
       expect(window.handleResponse).toHaveBeenCalled();
     });
@@ -78,7 +79,7 @@ describe('handleError', function(){
       expect(window.handleError).not.toHaveBeenCalled();
       createIssue("temp", "blake41", "BIG ISSUE", "the biggest issue ever!!");
       var response = {
-        "status": 401, 
+        "status": 401,
         "contentType": 'text/plain',
         "responseText" : "unauth",
         "statusText": "Unathorized"
