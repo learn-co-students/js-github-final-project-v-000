@@ -1,9 +1,12 @@
+
+var token = "notatoken"
+
+
 function GithubInteractor (token) {
   this.token = token;
 }
 function createIssue(repoName, repoOwner, title, body) {
   var url = 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues'
-  // var url = 'https://api.github.com/repos/c1505/pull/issues'
   var data = {
     "title": title,
     "body": body
@@ -17,16 +20,20 @@ function createIssue(repoName, repoOwner, title, body) {
     },
     data: JSON.stringify(data)
   }).done(function(response) {
-    // console.log(response.html_url)
-    $("body").append("<a href=" + response.html_url + ">" + response.html_url + "</a>")
+    handleResponse(response)
   })
   .fail(function(response) {
-    console.log("Post Error: " + response.responseText);
+    handleError();
+    // console.log("Post Error: " + response.responseText);
   })
 }
 
+function handleError(jqXHR, textStatus, error) {
+  console.log("Post error: " + error);
+}
+
 function handleResponse(response) {
-  $("body").append("<a href=" + response.html_url + ">" + response.html_url + "</a>")
+  $("#issue").append("<a href=" + response.html_url + ">" + response.title + "</a>")
 }
 
 $(document).ready(function(){
