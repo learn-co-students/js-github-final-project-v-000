@@ -7,20 +7,22 @@ function GithubInteractor(token, repoOwner, repoName, title, body){
   this.token = token
 }
 
-GithubInteractor.prototype.createIssue = function(repoName, repoOwner){
+function createIssue(repoName, repoOwner, issueTitle, issueContent){
   $.ajax({
     url: defaultUrl + repoOwner + "/" + repoName + "/issues",
-    method: "POST", 
+    type: "POST", 
     contentType: "application/json",
     dataType: 'json',
     beforesend: function(xhr) {
       xhr.setRequestHeader("Authorization", "token" + mySecret);
     },
-  }).done(this.handleResponse(response))
+  })
+
+  //.done(handleResponse(response))
 }
 
 
-GithubInteractor.prototype.handleResponse = function(JSONdata) {
+function handleResponse(JSONdata) {
     debugger;
     console.log(data)
 
