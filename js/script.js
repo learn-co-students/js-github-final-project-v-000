@@ -13,6 +13,7 @@ function createIssue(repoName, repoOwner, issueTitle, issueContent){
     type: "POST", 
     contentType: "application/json",
     dataType: 'json',
+    data: JSON.stringify({title: issueTitle, body: issueContent}),
     beforesend: function(xhr) {
       xhr.setRequestHeader("Authorization", "token" + mySecret);
     },
