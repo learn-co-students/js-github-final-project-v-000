@@ -18,12 +18,12 @@ function createIssue(repoName, repoOwner, issueTitle, issueContent){
       xhr.setRequestHeader("Authorization", "token" + mySecret);
     },
   })
-
-  //.done(handleResponse(response))
+  .done(handleResponse())
+  .fail(handleError)
 }
 
 
-function handleResponse(JSONdata) {
+function handleResponse(data) {
     debugger;
     console.log(data)
 
@@ -39,12 +39,12 @@ function handleResponse(JSONdata) {
 // }
 
 
-// function handleError() {
-//   // takes 3 args: hash, errorThrown, textStatus
-//   // console.log(error)
-//   debugger;
+function handleError() {
+  // takes 3 args: hash, errorThrown, textStatus
+  // console.log(error)
+  debugger;
 
-// }
+}
 
 
 // var bindCreateIssueButton = function(event) {
