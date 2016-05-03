@@ -1,49 +1,49 @@
 'use strict';
 
 var defaultUrl = 'https://api.github.com/repos/'
-
+var token = mySecret
 
 function GithubInteractor(token, repoOwner, repoName, title, body){
   this.token = token
 }
 
-function createIssue(repoName, repoOwner, issueTitle, issueContent){
+function buildData(issueTitle, issueBody) {
+  var data = {}
+  // debugger;
+    data.title = issueTitle, 
+    data.body = issueBody
+
+  return JSON.stringify(data)
+}
+
+function createIssue(repoName, repoOwner, issueTitle, issueBody){
+  var postData = buildData(issueTitle, issueBody)
+
   $.ajax({
     url: defaultUrl + repoOwner + "/" + repoName + "/issues",
     type: "POST", 
     contentType: "application/json",
-    dataType: 'json',
-    data: JSON.stringify({title: issueTitle, body: issueContent}),
-    beforesend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "token" + mySecret);
+    data: postData,
+    headers: {
+      Authorization: "token " + token
     },
+    success: function(response) {
+      handleResponse(response)
+    },
+    error: function(xhr, errorThrown, textStatus) {
+      handleError(xhr, errorThrown, textStatus)
+    }
   })
-  .done(handleResponse())
-  .fail(handleError)
-}
-
-
-function handleResponse(data) {
-    debugger;
-    console.log(data)
-
-  // }.error(function(response){
-  //   debugger;
-}
-// function submitForm() {
-// debugger;
   
-//   })
-
-//   // this calls createIssue
-// }
+}
 
 
-function handleError() {
-  // takes 3 args: hash, errorThrown, textStatus
-  // console.log(error)
-  debugger;
+function handleResponse(response) {
+  $("#issue").append("<p id='issue'><a href=" + response.html_url + ">" + response.title + "</a></p>")
+}
 
+function handleError(xhr, errorThrown, textStatus) {
+  console.log("Post error: " + textStatus)
 }
 
 
