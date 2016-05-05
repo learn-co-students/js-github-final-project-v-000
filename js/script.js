@@ -10,14 +10,14 @@ function GithubInteractor(token) {
 var accessToken;
 var interactor = new GithubInteractor(accessToken);
 
-function createIssue(repoName, repoOwner, issueTitle, issueBody) {
-  
+function createIssue(repoName, repoOwner, issueTitle, issueBody, accessToken) {
+  var interactor = new GithubInteractor(accessToken);
   var url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/issues";
   $.ajax({
     url: url,
     type: "POST",
     beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "token " + accessToken);
+      xhr.setRequestHeader("Authorization", "token " + interactor.token);
     },
     data: JSON.stringify({
         title: issueTitle, 
@@ -48,12 +48,9 @@ function handleSubmit() {
     var repoOwner = $('#repoOwner').val();
     var issueTitle = $('#title').val();
     var issueBody = $('#body').val();
-    createIssue(repoName, repoOwner, issueTitle, issueBody);
-    
     var accessToken = $('#accessToken').val();
-    var interactor = new GithubInteractor(accessToken);
+    createIssue(repoName, repoOwner, issueTitle, issueBody, accessToken);
     event.preventDefault();
-    return interactor;
   });
 }
 
