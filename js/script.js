@@ -2,7 +2,7 @@ function GithubInteractor(token){
   this.token = token;
 }
 
-var interactor = new GithubInteractor('b11c7da4c212ae70feae013955c79d4c4014f487')
+var interactor = new GithubInteractor('testtoken')
 var token = interactor.token
 
 function createIssue(repoName, repoOwner, issueTitle, issueBody) {
