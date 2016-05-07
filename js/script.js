@@ -2,32 +2,35 @@ $(document).ready(function(){
   bindCreateButton();
 });
 
-var github_token = new GithubInteractor('TOKEN_GOES_HERE');
+var github_token = new GithubInteractor('api-key-here');
 
 var bindCreateButton = function() {
-  $('#create').click(function(event){
+  $('form').on("submit", function(event){
     // github_token = new GithubInteractor($('#token').val());
-    createIssue($('#repoName').val(), $('#repoOwner').val(), $('#issueTitle').val(), $('#body').val());
-    event.stopPropagation();
+    var repo = $('#repoName').val(),
+        owner = $('#repoOwner').val(),
+        title = $('#title').val(),
+        body = $('#body').val();
+    createIssue(repo, owner, title, body);
+    event.preventDefault();
   });
 };
 
-function createIssue(repoName, repoOwner, issueTitle, issueBody){
-  var github_url = 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues';
+function createIssue(repo, owner, title, body){
+  var github_url = 'https://api.github.com/repos/' + owner + '/' + repo + '/issues';
 
   var token = github_token.token;
   var issue_obj = {
-    title: issueTitle,
-    body: issueBody
-  };
-
+    title: title,
+    body: body
+  }
   $.ajax({
     url: github_url,
     type: 'POST',
     dataType: 'json',
     data: JSON.stringify(issue_obj),
     beforeSend: function(xhr){
-      xhr.setRequestHeader("Authorization", "token: " + token);
+      xhr.setRequestHeader("Authorization", "token " + token);
     },
     success: handleResponse,
     error: handleError
