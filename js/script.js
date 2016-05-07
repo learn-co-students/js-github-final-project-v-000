@@ -2,13 +2,19 @@ $(document).ready(function(){
   bindCreateButton();
 });
 
-var github_token = new GithubInteractor('TOKEN_GOES_HERE');
+var github_token;
+github_token = new GithubInteractor('TOKEN_GOES_HERE');
 
 var bindCreateButton = function() {
-  $('#create').click(function(event){
+  $('form').on("submit", function(event){
     // github_token = new GithubInteractor($('#token').val());
-    createIssue($('#repoName').val(), $('#repoOwner').val(), $('#issueTitle').val(), $('#body').val());
-    event.stopPropagation();
+    var repo = $('#repoName').val(),
+    owner = $('#repoOwner').val(),
+    title = $('#title').val(),
+    body = $('#body').val();
+    createIssue(repo, owner, title, body);
+    // event.stopPropagation();
+    event.preventDefault();
   });
 };
 
@@ -25,10 +31,10 @@ function createIssue(repoName, repoOwner, issueTitle, issueBody){
     url: github_url,
     type: 'POST',
     dataType: 'json',
-    data: JSON.stringify(issue_obj),
     beforeSend: function(xhr){
-      xhr.setRequestHeader("Authorization", "token: " + token);
+      xhr.setRequestHeader("Authorization", "token " + token);
     },
+    data: JSON.stringify(issue_obj),
     success: handleResponse,
     error: handleError
   });
