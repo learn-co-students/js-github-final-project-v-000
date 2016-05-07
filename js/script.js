@@ -2,31 +2,28 @@ $(document).ready(function(){
   bindCreateButton();
 });
 
-var github_token;
-github_token = new GithubInteractor('TOKEN_GOES_HERE');
+var github_token = new GithubInteractor('TOKEN_GOES_HERE');
 
 var bindCreateButton = function() {
   $('form').on("submit", function(event){
-    // github_token = new GithubInteractor($('#token').val());
     var repo = $('#repoName').val(),
     owner = $('#repoOwner').val(),
     title = $('#title').val(),
     body = $('#body').val();
+
     createIssue(repo, owner, title, body);
-    // event.stopPropagation();
     event.preventDefault();
   });
 };
 
-function createIssue(repoName, repoOwner, issueTitle, issueBody){
-  var github_url = 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues';
+function createIssue(repo, owner, title, body){
+  var github_url = 'https://api.github.com/repos/' + owner + '/' + repo + '/issues';
 
   var token = github_token.token;
   var issue_obj = {
-    title: issueTitle,
-    body: issueBody
-  };
-
+    title: title,
+    body: body
+  }
   $.ajax({
     url: github_url,
     type: 'POST',
@@ -45,10 +42,9 @@ function GithubInteractor(token){
 };
 
 function handleResponse(jsonData){
-  console.log(jsonData);
+  $('#issue').append($('<a>').attr('href', jsonData.html_url).text(jsonData.title));
 };
 
 function handleError(errorData, textStatus, errorThrown){
-  console.dir(errorData);
   console.log('Post error: ' + errorThrown);
 };
