@@ -1,4 +1,4 @@
-var newInteraction = new GithubInteractor("4795d3e4a3930f9875764bb346eae24d98e7bdd1")
+var newInteraction = new GithubInteractor(github_key)
 
 $(document).ready(function() {
   submitForm();
