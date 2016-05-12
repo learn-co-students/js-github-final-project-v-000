@@ -9,23 +9,23 @@ describe('#createIssue', function() {
   beforeEach(function(){
     setFixtures('<body><form>Repository Name:<input type="text" id="repoName">Repository Owner:<input type="text" id="repoOwner">Issue Title:<input type="text" id="title">Issue Body:<input type="text" id="body"><input type="submit" value="submit"></form><div id="issue"></div></body>')
   });
-  it('calls the github api with a post', function() {
-    spyOn($, "ajax").and.callFake(function (req) {
+    it('calls the github api with a post', function() {
+      spyOn($, "ajax").and.callFake(function (req) {
         var d = $.Deferred();
         d.reject({});
         return d.promise();
       });
-    var repoName = "temp";
-    var repoOwner = "blake41";
-    createIssue(repoName,repoOwner , "BIG ISSUE", "the biggest issue ever");
-    expect($.ajax.calls.argsFor(0)[0].url).toEqual('https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues');
-    expect($.ajax.calls.argsFor(0)[0].type).toEqual('POST');
-  });
+     var repoName = "temp";
+     var repoOwner = "blake41";
+     createIssue(repoName, repoOwner, "BIG ISSUE", "the biggest issue ever!!");
+     expect($.ajax.calls.argsFor(0)[0].url).toEqual('https://github.com/repos/' + repoOwner + '/' + repoName + '/issues');
+     expect($.ajax.calls.argsFor(0)[0].type).toEqual('POST');
+   });
 
   it('sends the correct data', function() {
     expectedData = {
       'title':   "BIG ISSUE",
-      'body': 'the biggest issue ever!!', 
+      'body': 'the biggest issue ever!!',
     }
     spyOn(JSON, 'stringify');
     var repoName = "temp";
@@ -61,7 +61,7 @@ describe('handleResponse', function(){
         "body": "the biggest issue ever!!"
       }
       var response = {
-        "status": 200, 
+        "status": 200,
         "contentType": 'application/json',
         "responseText" : JSON.stringify(data)
       }
@@ -78,7 +78,7 @@ describe('handleError', function(){
       expect(window.handleError).not.toHaveBeenCalled();
       createIssue("temp", "blake41", "BIG ISSUE", "the biggest issue ever!!");
       var response = {
-        "status": 401, 
+        "status": 401,
         "contentType": 'text/plain',
         "responseText" : "unauth",
         "statusText": "Unathorized"
