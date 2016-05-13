@@ -21,15 +21,13 @@ function createIssue(repoName, repoOwner, title, issue) {
     headers: {
       TOKEN
     }
-  }).done(function() {
-    $("#issue").text("posted.")
-  });
+  }).done(handleResponse).fail(handleError);
 }
 
-function handleResponse() {
-
+function handleResponse(response) {
+  $('#issue').html('<a href="' + response.html_url + '">' + response.title + '</a>');
 }
 
-function handleError() {
-
+function handleError(jqXHR, textStatus, errorThrown) {
+  console.log("Post error: " + errorThrown);
 }
