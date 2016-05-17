@@ -1,4 +1,4 @@
-var token = "cbbdfedda51deb1f87ef74debcd7b45278f15a55"
+var token = "cbbdfe"
 
 $(document).ready(function() {
   submitForm();
