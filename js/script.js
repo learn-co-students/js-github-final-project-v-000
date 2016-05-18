@@ -21,7 +21,7 @@ function GithubInteractor(token){
   this.apiBaseUrl = "https://api.github.com/repos/";
 }
 
-var interactor = new GithubInteractor("f051718e3a0df5207fe2c6aac5de48a8d96d167a")
+var interactor = new GithubInteractor("")
 
 
 function submitForm(){
