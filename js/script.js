@@ -1,46 +1,50 @@
-function GithubInteractor(token) {
-  this.token = token;
-}
+$(document).ready(function(){
+  bindCreateButton();
+});
 
-var interactor = new GithubInteractor("a0d61231c02f2ca76769491c23165caa2c861391")
+var github_token = new GithubInteractor('TOKEN_GOES_HERE');
 
-function createIssue(name, owner, title, body) {
-  var url = "https://api.github.com/repos/" + owner + "/" + name + "/issues";
-  var data = {
+var bindCreateButton = function() {
+  $('form').on("submit", function(event){
+    var repo = $('#repoName').val(),
+    owner = $('#repoOwner').val(),
+    title = $('#title').val(),
+    body = $('#body').val();
+
+    createIssue(repo, owner, title, body);
+    event.preventDefault();
+  });
+};
+
+function createIssue(repo, owner, title, body){
+  var github_url = 'https://api.github.com/repos/' + owner + '/' + repo + '/issues';
+
+  var token = github_token.token;
+  var issue_obj = {
     title: title,
     body: body
-  };
+  }
   $.ajax({
-    type: "POST",
-    url: url,
-    beforeSend(xhr) {
-      xhr.setRequestHeader("Authorization", "token", + interactor.token)
+    url: github_url,
+    type: 'POST',
+    dataType: 'json',
+    beforeSend: function(xhr){
+      xhr.setRequestHeader("Authorization", "token " + token);
     },
-    data: JSON.stringify(data)
-  })
-  .done(handleResponse)
-  .fail(handleError);
+    data: JSON.stringify(issue_obj),
+    success: handleResponse,
+    error: handleError
+  });
 };
 
-function Issue(url, title, body) {
-  this.url = url;
-  this.title = title;
-  this.body = body;
-}
-
-Issue.prototype.renderIssue = function(selector){
-  var link = $('<a>')
-    .attr('href', this.issueURL)
-    .text(this.title);
-    selector.append(link);
-}
-
-
-function handleResponse(response) {
-  var issue = new Issue(response.html_url, response.title, response.body)
-  issue.renderIssue($('#issue'));
+function GithubInteractor(token){
+  this.token = token;
 };
 
-function handleError(jqXHR, textStatus, error) {
-  console.log("Post error: " + error);
-}
+function handleResponse(jsonData){
+  $('#issue').append($('<a>').attr('href', jsonData.html_url).text(jsonData.title));
+};
+
+function handleError(errorData, textStatus, errorThrown){
+  console.log('Post error: ' + errorThrown);
+};
