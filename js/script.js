@@ -1,23 +1,31 @@
-var endpoint = "/repos/" + owner + "/" + name + "/issues"
+$(document).ready(function(){
+  submitForm();
+})
 
-
-function createIssue(name, owner, title, body){} 
- var data = {
-  "title": title,
-  "body": body,
-  "assignee": owner,
+  function GithubInteractor(token){
+    this.token = token;
   }
+
+  var interaction = new GithubInteractor("")
+
+
+function createIssue(name, owner, title, body){ 
+  var endpoint = "https://api.github.com/repos/" + owner + "/" + name + "/issues"
+   var data = {
+     "title": title,
+      "body": body,
+    }
 
   $.ajax({
     url: endpoint,
     type: "POST",
-    dataType: "json"
+    dataType: "json",
     headers: {
-    Authorization: 'token ' + token
+    Authorization: 'token ' + interaction.token
      },
      data: JSON.stringify(data)
-   }).done(function(response){  });
-};
+   }).done(handleResponse).fail(handleError);
+}
 
 function submitForm(){
   $('form').on('submit', function(event){
@@ -27,8 +35,27 @@ function submitForm(){
     var owner = $('#repoOwner').val();
     createIssue(name, owner, title, body);
     event.preventDefault();
-  });
-
- 
+  }); 
 }
+
+function Issue(url, title, body) {
+  this.url = url;
+  this.title = title;
+  this.body = body;
+}
+
+Issue.prototype.renderIssue = function(issueSelector){
+  var link = "<li><a href =" + this.url + ">" + this.title + "</a></li>"
+  issueSelector.append(link);
+}
+
+function handleResponse(response) {
+  var issue = new Issue(response.url, response.title, response.body)
+  issue.renderIssue($('#issue'));
+}
+
+function handleError(XHR, status, error) {
+  console.log("Post error: " + error);
+}
+
 
