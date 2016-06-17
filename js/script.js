@@ -20,7 +20,7 @@ function GithubInteractor(token){
   this.baseUrl = "https://api.github.com/repos/";
 }
 
-var interactor = new GithubInteractor('8bc4c945d32bf26bef888348423752b21de232a5')
+var interactor = new GithubInteractor('')
 
 function submitForm(){
   $('form').on('submit', function(event){
