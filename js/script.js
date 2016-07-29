@@ -1,19 +1,18 @@
 $(document).ready(function(){
   submitForm();
-  var token = new GithubInteractor("token")
 });
 
 function GithubInteractor(token){
   this.token = token;
 }
+var token = new GithubInteractor("token")
 
 function createIssue(repoName, repoOwner, title, body){
-  //var token = new GithubInteractor("token")
   $.ajax({
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues',
     type: 'POST',
     dataType: "json",
-    //headers: {'Authorization': 'token ' + token},
+    headers: {'Authorization': 'token ' + token.token},
     data: JSON.stringify({'title' : title, 'body' : body})
   }).done(function(response){
     handleResponse(response);
@@ -34,17 +33,9 @@ function submitForm(){
 }
 
 function handleResponse(response){
-  console.log("STARTING SUCCESS...");
-  console.log(response);
-  console.log("Success: " + response.statusText);
   $('#issue').append('<div>'+ response.title +'</div>');
 }
 
-function handleError(response){
-  console.log("STARTING ERROR...");
-  console.log({response});
-  console.log("Post error: " + {response}.statusText);
-  $('#issue').append('<div>'+ "Post error: " + response.statusText +'</div>');
+function handleError(jqXHR, textStatus, error) {
+  console.log("Post error: " + error);
 }
-
-// a35587e45f41c5914cc13fc47d3fddba4ed2984f
