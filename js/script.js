@@ -6,9 +6,9 @@ function GithubInteractor(input){
   this.token = input;
 }
 
-var myToken = new GithubInteractor("MY-TOKEN-GOES-HERE");
+var myToken = new GithubInteractor("117e021b00c5fa9d32e06b0008531cd1d93b9452");
 
-function submitForm(ev){
+function submitForm(){
   $('form').on('submit', function(event){
     var repo = $('#repoName').val();
     var owner = $('#repoOwner').val();
@@ -19,9 +19,11 @@ function submitForm(ev){
   })
 }
 
-function Issue(title, body){
+function Issue(url, title, body){
+  this.url = url;
   this.title = title;
   this.body = body;
+  $('#issue').append("<li><a href='" + this.url + "'>" + this.title + "</a></li>");
 }
 
  function createIssue(repo, owner, issueTitle, issueBody){
@@ -38,23 +40,15 @@ function Issue(title, body){
      },
      dataType: "json",
      data: JSON.stringify(data),
-     success: handleResponse(),
-     error: handleError()
    })
+   .done(handleResponse)
+   .fail(handleError)
  }
 
- function handleResponse(){
-
+ function handleResponse(response){
+   var newIssue = new Issue(response.html_url, response.title, response.body);
  }
 
- function handleError(){
-
+ function handleError(jqXHR, textStatus, errorThrown){
+   console.log("Post error: " + errorThrown);
  }
-
-
-// function should make an Ajax POST request to the Github API create issue end point.
-// /repos/:owner/:repo/issues
-// This endpoint should create an issue based on the information the user entered
-// in the form. Once the form has been submitted, you'll want to add a link to the
-// page to enter a repo name (thus you'll want to make sure the page doesn't refresh on form submission).
-// If the POST request fails, the function should print out Post error: error_name to the console.
