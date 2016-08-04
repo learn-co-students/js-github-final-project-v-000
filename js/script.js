@@ -2,6 +2,12 @@ $(document).ready(function(){
   submitForm();
 });
 
+function GithubInteractor(input){
+  this.token = input;
+}
+
+var myToken = new GithubInteractor("MY-TOKEN-GOES-HERE");
+
 function submitForm(ev){
   $('form').on('submit', function(event){
     var repo = $('#repoName').val();
@@ -27,14 +33,22 @@ function Issue(title, body){
    $.ajax({
      url: "https://api.github.com/repos/" + owner + "/" + repo + "/issues",
      type: "POST",
-     dataType: "json",
-     headers: {
-       Authorization: "token b962a9e367f665279d758e76f42c293acf5fbd51"
+     beforeSend: function(xhr) {
+       xhr.setRequestHeader("Authorization", "token " + myToken.token);
      },
+     dataType: "json",
      data: JSON.stringify(data),
-   }).done(function(response){
-     console.log(response);
+     success: handleResponse(),
+     error: handleError()
    })
+ }
+
+ function handleResponse(){
+
+ }
+
+ function handleError(){
+
  }
 
 
