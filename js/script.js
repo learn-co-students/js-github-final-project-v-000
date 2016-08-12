@@ -18,21 +18,17 @@ function createIssue(repo, owner, title, body) {
     Authorization: "token "+interactor.token
   };
 
+
+
   $.ajax({
     url: 'https://api.github.com/repos/'+owner+'/'+repo+'/issues',
     type: 'POST',
-    dataType: 'jsonp',
+    dataType: 'json',
     data: JSON.stringify(data),
     beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization: ", "token " + interactor.token);
+      xhr.setRequestHeader("Authorization", "token " + interactor.token);
     }
-    // headers: auth  
-    // success: function(response){
-    //   handleResponse(response);
-    // },
-    // error: function(xhr, textStatus, errorThrown){
-    //  handleError(xhr, textStatus, errorThrown);
-    // }
+    // headers: auth
   }).done(handleResponse).fail(handleError);
 }
 
