@@ -11,9 +11,9 @@ function Issue(issueURL, title, body){
 
 Issue.prototype.renderIssue = function(selector){
   var link = $('<a>')
-    .attr('href', this.issueURL)
-    .text(this.title);
-    selector.append(link);
+     .attr('href', this.issueURL)
+     .text(this.title);
+     selector.append(link);
 }
 
 function GithubInteractor(token){
@@ -23,12 +23,10 @@ function GithubInteractor(token){
 
 var interactor = new GithubInteractor("7c0237c0a9edd7a9f5f1d1c93eb561331a0bd6da")
 
-
 function submitForm(){
   $('form').on('submit', function(event){
-    // take data below and turn into object with properties
     var repoName = $('#repoName').val();
-    var repoOwner = $('#repoOwner').val();
+    var repoOwner = &('#repoOwner').val();
     var title = $('#title').val();
     var body = $('#body').val();
     createIssue(repoName, repoOwner, title, body);
@@ -36,29 +34,29 @@ function submitForm(){
   });
 }
 
-function handleResponse(response) {
+function handleResponse(response){
   var issue = new Issue(response.html_url, response.title, response.body)
   issue.renderIssue($('#issue'));
 }
 
-function handleError(jqXHR, textStatus, error) {
+function handleError(jqXHR, textStatus, error){
   console.log("Post error: " + error);
 }
 
 function createIssue(repoName, repoOwner, title, body){
-  var url = interactor.apiBaseUrl + repoOwner + "/" + repoName + "/issues";
-  var data = {
-    title: title,
-    body: body
-  }
-  $.ajax({
-    type: "POST",
-    url: url,
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "token " + interactor.token);
-    },
-    data: JSON.stringify(data)
-  })
-  .done(handleResponse)
-  .fail(handleError);
+   var url = interactor.apiBaseUrl + repoOwner + "/" + repoName + "/issues";
+   var data = {
+     title: title,
+     body: body
+   }
+   $.ajax({
+     type: "POST",
+     url: url,
+     beforeSend: function(xhr){
+       xhr.setRequestHeader("Authorization", "token " + interactor.token);
+     },
+     data: JSON.stringify(data)
+   })
+   .done(handleResponse)
+   .fail(handleError);
 }
