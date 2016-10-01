@@ -79,9 +79,11 @@ describe('handleError', function(){
       createIssue("temp", "blake41", "BIG ISSUE", "the biggest issue ever!!");
       var response = {
         "status": 401, 
-        "contentType": 'text/plain',
-        "responseText" : "unauth",
-        "statusText": "Unathorized"
+        "responseText": {
+          "message": "Bad credentials",
+          "documentation_url": "https://developer.github.com/v3"
+        },
+      "statusText": "Unauthorized"
       }
       jasmine.Ajax.requests.mostRecent().respondWith(response);
       expect(window.handleError).toHaveBeenCalled();
