@@ -1,7 +1,7 @@
 describe('GithubInteractor constructor function', function(){
   it('creates a GithubInteractor object', function(){
-      var interactor = new GithubInteractor("wasdfwasd");
-      expect(interactor.token).toEqual("wasdfwasd");
+    var interactor = new GithubInteractor("wasdfwasd");
+    expect(interactor.token).toEqual("wasdfwasd");
   });
 });
 
@@ -11,10 +11,10 @@ describe('#createIssue', function() {
   });
   it('calls the github api with a post', function() {
     spyOn($, "ajax").and.callFake(function (req) {
-        var d = $.Deferred();
-        d.reject({});
-        return d.promise();
-      });
+      var d = $.Deferred();
+      d.reject({});
+      return d.promise();
+    });
     var repoName = "temp";
     var repoOwner = "blake41";
     createIssue(repoName,repoOwner , "BIG ISSUE", "the biggest issue ever");
@@ -33,7 +33,7 @@ describe('#createIssue', function() {
     createIssue(repoName, repoOwner, "BIG ISSUE", "the biggest issue ever!!");
     expect(JSON.stringify.calls.argsFor(0)[0]).toEqual(expectedData);
   });
- });
+});
 
 describe('handleResponse', function(){
   beforeEach(function(){
@@ -41,10 +41,10 @@ describe('handleResponse', function(){
   });
   it('renders the issue link on the page', function(){
     handleResponse({
-        "html_url": 'https://github.com/username/reponame/issue/12',
-        "title": "BIG ISSUE",
-        "body": "the biggest issue ever!!"
-      })
+      "html_url": 'https://github.com/username/reponame/issue/12',
+      "title": "BIG ISSUE",
+      "body": "the biggest issue ever!!"
+    })
     expect($('#issue').text()).toEqual("BIG ISSUE");
   });
 });
@@ -81,7 +81,7 @@ describe('handleError', function(){
         "status": 401, 
         "contentType": 'text/plain',
         "responseText" : "unauth",
-        "statusText": "Unathorized"
+        "statusText": "Unauthorized"
       }
       jasmine.Ajax.requests.mostRecent().respondWith(response);
       expect(window.handleError).toHaveBeenCalled();
@@ -92,10 +92,16 @@ describe('handleError', function(){
 describe('handleError', function(){
   it("logs error to the console", function() {
     console.log = jasmine.createSpy("log");
-    var errorThrown = "Unauthorized";
-    var textStatus = "error"
-    var jqXHR = {}
-    handleError(jqXHR, textStatus, errorThrown)
-    expect(console.log).toHaveBeenCalledWith("Post error: " + errorThrown);
+    // var errorThrown = "Unauthorized";
+    // var textStatus = "error"
+    // var jqXHR = {}
+    var error = {
+      "status": 401, 
+      "contentType": 'text/plain',
+      "responseText" : "unauth",
+      "statusText": "Unauthorized"
+    }
+    handleError(error)
+    expect(console.log).toHaveBeenCalledWith("Post error: " + error.statusText);
   });
 })
