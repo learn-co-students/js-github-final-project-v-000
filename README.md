@@ -7,7 +7,7 @@
 
 It's time to put all your JavaScript skills to the test to build an app combining everything you've learned about JavaScript so far. At Flatiron School, we rely heavily on traditional git work flow to manage our curriculum. A huge part of that means opening issues when you find something that needs to be fixed or updated on a piece of curriculum.
 
-Typically, we open an issue directly through GitHub's browser interface. But, we can actually use their API endpoint to open issues in our own app. GitHub's API only let's you create an issue if you have pull access to the repo.
+Typically, we open an issue directly through GitHub's browser interface. But, we can actually use their API endpoint to open issues in our own app. GitHub's API only lets you create an issue if you have pull access to the repo.
 
 ## Instructions
 
@@ -22,3 +22,5 @@ The `createIssue` function should make an Ajax `POST` request to the Github API 
 This endpoint should create an issue based on the information the user entered in the form. Once the form has been submitted, you'll want to add a link to the page to enter a repo name (thus you'll want to make sure the page doesn't refresh on form submission).
 
 If the POST request fails, the function should print out `Post error: error_name`to the console.
+
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/js-github-final-project' title='JavaScript Final Project'>JavaScript Final Project</a> on Learn.co and start learning to code for free.</p>
