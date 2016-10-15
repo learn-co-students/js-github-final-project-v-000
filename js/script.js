@@ -3,33 +3,33 @@ $(document).ready(function() {
   submitForm();
 });
 
-// function Issue(issueURL, title, body){
-//   this.issueURL = issueURL;
-//   this.title = title;
-//   this.body = body;
-// }
+function Issue(issueURL, title, body){
+  this.issueURL = issueURL;
+  this.title = title;
+  this.body = body;
+}
 
-// Issue.prototype.renderIssue = function(selector){
-//   var link = $('<a>')
-//     .attr('href', this.issueURL)
-//     .text(this.title);
-//     selector.append(link);
-// }
-
-class Issue {
-  constructor(issueURL, title, body) {
-    this.issueURL = issueURL;
-    this.title = title;
-    this.body = body;
-  };
-
-  renderIssue(selector) {
-    var link = $('a')
-      .attr('href', this.issueURL)
-      .text(this.title);
+Issue.prototype.renderIssue = function(selector){
+  var link = $('<a>')
+    .attr('href', this.issueURL)
+    .text(this.title);
     selector.append(link);
-  };
-};
+}
+
+// ES6 not working so the following isn't passing
+// class Issue {
+//   constructor(issueURL, title, body){
+//     this.issueURL = issueURL;
+//     this.title = title;
+//     this.body = body;
+//   }
+//   renderIssue(selector) {
+//     var link = $('<a>')
+//       .attr('href', this.issueURL)
+//       .text(this.title);
+//     selector.append(link);
+//   }
+// }
 
 function GithubInteractor(token) {
   this.token = token;
