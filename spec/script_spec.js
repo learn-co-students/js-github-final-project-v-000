@@ -1,7 +1,7 @@
 describe('GithubInteractor constructor function', function(){
   it('creates a GithubInteractor object', function(){
-      var interactor = new GithubInteractor("wasdfwasd");
-      expect(interactor.token).toEqual("wasdfwasd");
+      var interactor = new GithubInteractor("6589c52e4f362a03b4cab4042ed618369c50f534");
+      expect(interactor.token).toEqual("6589c52e4f362a03b4cab4042ed618369c50f534");
   });
 });
 
