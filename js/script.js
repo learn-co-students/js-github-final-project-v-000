@@ -1,6 +1,6 @@
 $(document).ready( function(){
 
-  $('#submit').click(function(e) {
+  $('#submit').on('click', function(e) {
       var repoName = $('#repoName').val();
       var repoOwner = $('#repoOwner').val();
       var title = $('#title').val();
@@ -44,8 +44,6 @@ var handleError = function(XMLHttpRequest, textStatus, errorThrown) {
   console.log("Post error: " + errorThrown);
 }
 
-class GithubInteractor {
-  constructor(token) {
+function GithubInteractor(token) {
     this.token = token;
-  }
 }
