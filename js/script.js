@@ -14,6 +14,7 @@ $(document).ready( function(){
 
 var createIssue = function(repoName, repoOwner, title, body) {
   var interactor = new GithubInteractor("e47b3f9900993c717c3a57b47771b380f5ae43a9");
+
   $.ajax({
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues',
     type: 'POST',
@@ -23,8 +24,6 @@ var createIssue = function(repoName, repoOwner, title, body) {
     },
     data: JSON.stringify({title : title, body : body}),
     success: function(response) {
-      debugger
-
         handleResponse(response);
       },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -47,6 +46,6 @@ var handleError = function(XMLHttpRequest, textStatus, errorThrown) {
 
 class GithubInteractor {
   constructor(token) {
-    this.token = token
+    this.token = token;
   }
 }
