@@ -2,12 +2,17 @@
 // run in browser by typing `python -m SimpleHTTPServer`
 // navigate to localhost:8000
 
-class Issue {
-  constructor(URL, title, body) {
-    this.URL = URL;
-    this.title = title;
-    this.body = body;
-  }
+function Issue(issueURL, title, body){
+  this.URL = issueURL;
+  this.title = title;
+  this.body = body;
+}
+
+Issue.prototype.renderIssue = function(selector){
+  var link = $('<a>')
+    .attr('href', this.issueURL)
+    .text(this.title);
+    selector.append(link);
 }
 
 function GithubInteractor(token){
@@ -15,21 +20,19 @@ function GithubInteractor(token){
   this.baseUrl = "https://api.github.com/repos/";
 }
 
-var response = function(theResponse) {
-  var issue = new Issue(theResponse.URL, theResponse.title, theResponse.body)
-  var link = $('<a>')
-      .attr('href', this.URL)
-      .text(this.title);
-  $('#issue').append(link)
+var interactor = new GithubInteractor("6b869cc1249cc97528aad8f866bec2ca1bfc87f2")
+
+var handleResponse = function(response) {
+  var issue = new Issue(response.html_url, response.title, response.body)
+  issue.renderIssue($('#issue'));
 }
 
-var error = function(jqXHR, textStatus, theError) {
-  console.log("Error: " + theError);
+var handleError = function(jqXHR, textStatus, error) {
+  console.log("Post error: " + error);
 }
 
 var createIssue = function(repoName, repoOwner, title, body) {
   var URL = interactor.baseUrl + repoOwner + "/" + repoName + "/issues";
-  var API_KEY = "6b869cc1249cc97528aad8f866bec2ca1bfc87f2";
   var data = {
     'title': title,
     'body': body
@@ -37,14 +40,14 @@ var createIssue = function(repoName, repoOwner, title, body) {
 
   $.ajax({
     url: URL,
-    type: 'post',
+    type: 'POST',
     beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "token " + API_KEY);
+      xhr.setRequestHeader("Authorization", "token " + interactor.token);
     },
     data: JSON.stringify(data)
   })
-  .done(response)
-  .fail(error);
+  .done(handleResponse)
+  .fail(handleError);
 }
 
 // create an issue: POST /repos/:owner/:repo/issues
