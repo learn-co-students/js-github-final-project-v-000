@@ -1,10 +1,5 @@
-
-$(document).ready({
-
-
-  var API_KEY = "1e034522e5ad16a7";
-  var URL = "http://api.wunderground.com/api/" + API_KEY + "/hourly/q/NY/New_York.json";
-  var gitInt = new GithubInteractor("SDF");
+$(document).ready( function(){
+  var gitInt = new GithubInteractor("1e034522e5ad16a7");
 
   $('#submit').click(function() {
       var repoName = $('#repoName').val();
@@ -15,20 +10,27 @@ $(document).ready({
     });
 
 
-    function createIssue(repoName, repoOwner, title, body){
 
-    },
 
-    class GithubInteractor {
-      constructor(token) {
-        this.token = token
-      }
-
-      handleResponse(){
-
-      },
-      handleError(){
-
-      }
-    }
 });
+
+
+var createIssue = function(repoName, repoOwner, title, body) {
+
+}
+
+
+function handleResponse() {
+
+}
+
+function handleError() {
+
+}
+
+class GithubInteractor {
+  constructor(token) {
+    this.token = token
+  }
+
+}
