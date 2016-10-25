@@ -1,11 +1,12 @@
 $(document).ready( function(){
 
-  $('#submit').click(function() {
+  $('#submit').click(function(e) {
       var repoName = $('#repoName').val();
       var repoOwner = $('#repoOwner').val();
       var title = $('#title').val();
       var body = $('#body').val();
       createIssue(repoName, repoOwner, title, body);
+      e.preventDefault();
     });
 
 });
@@ -22,6 +23,8 @@ var createIssue = function(repoName, repoOwner, title, body) {
     },
     data: JSON.stringify({title : title, body : body}),
     success: function(response) {
+      debugger
+
         handleResponse(response);
       },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
