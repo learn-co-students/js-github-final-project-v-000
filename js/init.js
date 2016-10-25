@@ -1,15 +1,44 @@
-$(document).ready(function(){
 
-  var API_KEY = "1e034522e5ad16a7";
-  var URL = "http://api.wunderground.com/api/" + API_KEY + "/hourly/q/NY/New_York.json";
-  var gitInt = new GithubInteractor(URL);
 
-  $('#submit').click(function() {
-      var repoName = $('#repoName').val();
-      var repoOwner = $('#repoOwner').val();
-      var title = $('#title').val();
-      var body = $('#body').val();
-      GithubInteractor.createIssue(repoName, repoOwner, title, body);
+
+var myGists = function(username, token){
+  $.ajax({
+      url: "https://api.github.com/users/" + username + "/gists",
+      type: 'GET',
+      dataType: 'jsonp',
+    }).done(function(gists) {
+      $('#myGists').html('');
+
+      $.each(gists.data, function(index, gist){
+        var link = $('<a>')
+          .attr('href', gist.html_url)
+          .text(gist.description);
+
+        var listItem = $('<li>')
+          .append(link);
+
+        $('#myGists').append(listItem);
+      })
     });
+};
 
+var bindCreateButton = function() {
+  // call functions here
+
+};
+var files = {};
+files[file_name] = {"content": content};
+
+//Create a Gist with token from above
+// resource gist.github.com/techslides/9569cb7c7caa5e95bb7b
+$.ajax({
+    url: 'https://api.github.com/gists',
+    type: 'POST',
+    dataType: 'json',
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "token" + token);
+    },
+    data: JSON.stringify({ public : true, description : description, files : files}),
+}).done(function(response) {
+  myGists(response.owner.login, token);
 });

@@ -1,63 +1,34 @@
 
-var GithubInteractor = {
-  constructor(URL) {
-    this.url = URL;
-  }
-  createIssue: function(repoName, repoOwner, title, body){
-    var files = {};
-    files[file_name] = {"content": content};
+$(document).ready({
 
-    //Create a Gist with token from above
-    // resource gist.github.com/techslides/9569cb7c7caa5e95bb7b
-    $.ajax({
-        url: 'https://api.github.com/gists',
-        type: 'POST',
-        dataType: 'json',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("Authorization", "token" + token);
-        },
-        data: JSON.stringify({ public : true, description : description, files : files}),
-    }).done(function(response) {
-      myGists(response.owner.login, token);
+
+  var API_KEY = "1e034522e5ad16a7";
+  var URL = "http://api.wunderground.com/api/" + API_KEY + "/hourly/q/NY/New_York.json";
+  var gitInt = new GithubInteractor("SDF");
+
+  $('#submit').click(function() {
+      var repoName = $('#repoName').val();
+      var repoOwner = $('#repoOwner').val();
+      var title = $('#title').val();
+      var body = $('#body').val();
+      createIssue(repoName, repoOwner, title, body);
     });
-  },
-  handleResponse: function(tweets){
 
-  },
-  handleError: function(tweet){
-    if (tweet.length > 140){
-      return tweetShortener.wordSubstituter(tweet);
-    } else {
-      return tweet;
+
+    function createIssue(repoName, repoOwner, title, body){
+
+    },
+
+    class GithubInteractor {
+      constructor(token) {
+        this.token = token
+      }
+
+      handleResponse(){
+
+      },
+      handleError(){
+
+      }
     }
-  }
-};
-
-
-
-
-var myGists = function(username, token){
-  $.ajax({
-      url: "https://api.github.com/users/" + username + "/gists",
-      type: 'GET',
-      dataType: 'jsonp',
-    }).done(function(gists) {
-      $('#myGists').html('');
-
-      $.each(gists.data, function(index, gist){
-        var link = $('<a>')
-          .attr('href', gist.html_url)
-          .text(gist.description);
-
-        var listItem = $('<li>')
-          .append(link);
-
-        $('#myGists').append(listItem);
-      })
-    });
-};
-
-var bindCreateButton = function() {
-  // call functions here
-
-};
+});
