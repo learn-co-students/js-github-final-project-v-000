@@ -13,7 +13,7 @@ $(document).ready( function(){
 
 
 var createIssue = function(repoName, repoOwner, title, body) {
-  var interactor = new GithubInteractor("e47b3f9900993c717c3a57b47771b380f5ae43a9");
+  var interactor = new GithubInteractor("yourtoken");
 
   $.ajax({
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues',
