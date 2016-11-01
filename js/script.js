@@ -45,5 +45,3 @@ function submitForm() {
 $(document).ready(function() {
   submitForm();
 });
-
-// 8cfd99dd2b42b8c23259724aa384cf1d3904894d
