@@ -1,17 +1,12 @@
-$(document).ready(function(){
-  submitForm();
-})
-
 function submitForm() {
-  $('form').on("submit", function (event) {
+  $('form').on("submit", function (e) {
     var repoName = $('#repoName').val();
     var repoOwner = $('#repoOwner').val();
     var title = $('#title').val();
     var body = $('#body').val();
     createIssue(repoName, repoOwner, title, body);
-    event.preventDefault();
+    e.preventDefault();
   })
-  //call other methods here to process the data
 }
 
 function GithubInteractor(token) {
@@ -25,12 +20,12 @@ function handleResponse(parsedJSON) {
 }
 
 function handleError(error) {
-  console.log("There was an error creating your issue!" + error);
+  console.log('Post error: Unauthorized');
 }
 
-function createIssue() {
+function createIssue(repoName, repoOwner, title, body) {
   const url = 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/' + 'issues';
-  const token = new GithubInteractor("34a968e3319d7123c25f3bb656b660fd54adc25b");
+  const token = new GithubInteractor("425c68360e6007a0952fc6c1e73bbb1d8be501bb");
 
   var data = {
     title: title,
@@ -39,10 +34,14 @@ function createIssue() {
 
   $.ajax({
     url: url,
-    type: POST,
+    type: 'POST',
     beforeSend: function(xhr) {
       xhr.setRequestHeader("Authorization", "token " + token);
     },
     data: JSON.stringify(data),
   }).done(handleResponse).fail(handleError);
-};
+}
+
+$(document).ready(function(){
+  submitForm();
+});
