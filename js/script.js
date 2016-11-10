@@ -18,14 +18,17 @@ var createIssue = function(repoName, repoOwner, issueTitle, issueBody){
       xhr.setRequestHeader("Authorization", "token " + tokenHolder);
     },
     data: JSON.stringify(data)
-    // headers: {
-    //   Authorization: "4b55b2eab6734859d021d2fe62ce251b42721541"
-    // }
-  });
-  // postData.done(handleResponse(response))
+  }).done(handleResponse)
+    .fail(handleError)
 };
 
+function handleResponse(response) {
+  $('#issue').append(response["title"]);
+}
 
+function handleError(jqXHR, textStatus, errorThrown) {
+  console.log("Post error: " + errorThrown);
+}
 
 var bindSubmitButton = function() {
   // call functions here
