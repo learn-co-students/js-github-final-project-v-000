@@ -1,5 +1,16 @@
 var interactor = new GithubInteractor('YourTokenHere');
 
+$(document).ready(function() {
+  $('#submit').on('click', function(event) {
+    event.preventDefault();
+    var name = $('#repoName').val();
+    var owner = $('#repoOwner').val();
+    var title = $('#title').val();
+    var body = $('#body').val();
+    createIssue(name, owner, title, body);
+  })
+});
+
 function GithubInteractor(token) {
   this.token = token;
 }
@@ -31,5 +42,5 @@ function handleResponse(response) {
 }
 
 function handleError(jqXHR, textStatus, error) {
-  console.log('Post error: ' + error);
+  console.log('Post error: ' + error.status);
 }
