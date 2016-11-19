@@ -25,7 +25,11 @@ function handleResponse(response) {
 	$("#issue").html(html);
 }
 
-function handleError(error) {
+function handleError(error, error2) {
 	console.log(error);
+	console.log(error.constructor);
+	console.log(error.constructor.name);
+	console.log(error.message);
+	console.log(error.errors);
 	console.log("Post error: Unauthorized");
 }
