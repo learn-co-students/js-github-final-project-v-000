@@ -18,8 +18,14 @@ function createIssue(repoName, repoOwner, title, body, token) {
 	};
 	$.ajax(requestJSON).done(function(response) {
 		handleResponse(response);
-	}).fail(function(error) {
-		handleError(error);
+	}).fail(function(jqXHR) {
+		console.log("Anon function error:")
+		console.log(jqXHR);
+		console.log(jqXHR.status);
+		console.log(jqXHR.statusText);
+		var status = jqXHR.status;
+		var statusText = jqXHR.statusText;
+		handleError(jqXHR, status, statusText);
 	});
 }
 
@@ -28,13 +34,12 @@ function handleResponse(response) {
 	$("#issue").html(html);
 }
 
-function handleError(error, error2) {
-	console.log(error);
-	console.log(error.constructor);
-	console.log(error.constructor.name);
-	console.log(error.message);
-	console.log(error.errors);
-	console.log("Post error: Unauthorized");
+function handleError(jqXHR, textStatus, errorThrown) {
+	console.log("Entering handleError");
+	console.log(jqXHR);
+	console.log(textStatus);
+	console.log(errorThrown);
+	console.log("Post error: " + errorThrown);
 }
 
 function handleSubmit() {
