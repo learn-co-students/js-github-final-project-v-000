@@ -19,10 +19,10 @@ function submitForm() {
 }
 
 function createIssue(repoName, repoOwner, title, body) {
-  data = {
-    title: title,
-    body: body
-  }
+  var data = {
+    "title": title,
+    "body": body
+  };
 
   $.ajax({
     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/issues',
