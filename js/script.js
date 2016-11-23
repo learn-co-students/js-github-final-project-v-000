@@ -1,10 +1,8 @@
 function GithubInteractor(token){
   // set this.token and this.apiBaseUrl
   this.token = token
-  this.apiBaseUrl = "https://api.github.com/repos/"
 }
 
-var interactor = new GithubInteractor("f0eb94d3fecced82d3072a347db2df55c30f3715")
 
 function createIssue(repoName, repoOwner, title, body){
   // this function should make an Ajax POST request to the github API create issue end point
@@ -12,7 +10,8 @@ function createIssue(repoName, repoOwner, title, body){
   // when form is submitted
   // - add a link to the page to enter a repo name (thus we don't want to refresh on form
   //   submission)
-  var url = interactor.apiBaseUrl + repoOwner + "/" + repoName + "/issues";
+  var interactor = new GithubInteractor("f0eb94d3fecced82d3072a347db2df55c30f3715")
+  var url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/issues";
   debugger;
   var data = {
     title: title,
@@ -46,8 +45,22 @@ function submitForm() {
   })
 }
 
+function Issue(issueURL, title, body){
+  this.issueURL = issueURL;
+  this.title = title;
+  this.body = body;
+}
+
+Issue.prototype.renderIssue = function(selector){
+  var link = $('<a>')
+    .attr('href', this.issueURL)
+    .text(this.title);
+    selector.append(link);
+}
+
 function handleResponse(response) {
-  debugger;
+  var issue = new Issue(response.html_url, response.title, response.body)
+  issue.renderIssue($('#issue'));
 }
 
 function handleError(jqXHR, textStatus, errorThrown){
@@ -55,4 +68,4 @@ function handleError(jqXHR, textStatus, errorThrown){
 }
 
 // token
-// f0eb94d3fecced82d3072a347db2df55c30f3715
+// 59bb0ad60b3ff2e4bf478da9cf7381937c879a96
