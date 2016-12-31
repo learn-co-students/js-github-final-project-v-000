@@ -13,8 +13,8 @@ function createIssue(repoName, repoOwner, title, body){
  	$.ajax({
  		type: "POST",
  		url: url,
- 		data: {title: title, body: body},
- 		success: handleResponse(title),
+ 		data: JSON.stringify({title: title, body: body}),
+ 		success: handleResponse,
  		error: handleError
  	});
 }
@@ -23,12 +23,12 @@ function GithubInteractor(token){
 	this.token = token;
 }
 
-function handleResponse(title){
-	$("#issue").append(title)
+function handleResponse(response){
+	$("#issue").append(response.title)
 }
 
-function handleError(error){
-	console.log("Post error: " + JSON.stringify(error));
+function handleError(jqXHR, textStatus, errorThrown){
+	console.log("Post error: " + errorThrown);
 }
 
 $(document).ready(function() {
