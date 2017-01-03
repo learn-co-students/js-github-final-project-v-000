@@ -19,7 +19,7 @@ function submitForm(event) {
 
 function createIssue(repoName, repoOwner, issueName, issueBody) {
   var url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/issues"; 
-  var ghi = new GithubInteractor("c2221623d40ab2c3cc06723c2d6189ef5c6abb83");   
+  var ghi = new GithubInteractor("ACCESS TOKEN HERE");   
   $.ajax({
     url: url, 
     type: "POST", 
