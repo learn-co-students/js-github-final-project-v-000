@@ -11,7 +11,7 @@ function handleError(jqXHR, status, error) {
   console.log('Post error: ' + error);
 }
 
-var interactor = new GithubInteractor('e356a46f56e3cb8f5698cd54ba70a93687087247')
+var interactor = new GithubInteractor('token')
 
 function createIssue(repoName, repoOwner, issueTitle, issueBody) {
   var data = {
