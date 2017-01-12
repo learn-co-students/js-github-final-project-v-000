@@ -1,30 +1,12 @@
-function createIssue(repoName, repoOwner, title, body, token) {
-  var issue = {
-    'title': title,
-    'body': body
-  }
+$(document).ready(function() {
+  bindSubmitButton;
+});
 
-  var baseUrl = 'https://github.com/repos/';
-  var url = baseUrl + repoOwner + "/" + repoName + '/issues';
-
-  $.ajax({
-    url: url,
-    type: 'POST',
-    dataType: 'json',
-    headers: { Authorization: 'token ' + token}, //where do i put in the token???
-    data.JSON.stringify(issue)
-  })
-  .done(success)
-  .fail(function(error) {
-    console.log('Post error: ' + error);
-  });
-
+function GithubInteractor(token){
+  this.token = token;
 }
 
-function success(response) {
-  var html = '<a href="' + response.html_url + '">' + response.title + '</a>';
-  $('#issue').append(html);
-}
+var interactor = new GithubInteractor("YoudPutYourTokenHereInRealProduction")
 
 function bindSubmitButton() {
   $('form').on('submit', function(event) {
@@ -39,6 +21,31 @@ function bindSubmitButton() {
   });
 }
 
-$(document).ready(function() {
-  bindSubmitButton;
-});
+function handleResponse(response) {
+  var html = '<a href="' + response.html_url + '">' + response.title + '</a>';
+  $('#issue').append(html);
+}
+
+function handleError(error) {
+  console.log('Post error: ' + error);
+}
+
+function createIssue(repoName, repoOwner, title, body) {
+  var issue = {
+    'title': title,
+    'body': body
+  }
+
+  var baseUrl = 'https://github.com/repos/';
+  var url = baseUrl + repoOwner + "/" + repoName + '/issues';
+
+  $.ajax({
+    url: url,
+    type: 'POST',
+    dataType: 'json',
+    headers: { Authorization: 'token ' + interactor.token},
+    data.JSON.stringify(issue)
+  })
+  .done(handleResponse);
+  .fail(handleError);
+}
