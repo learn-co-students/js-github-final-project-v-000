@@ -22,7 +22,8 @@ function createIssue(repoName, repoOwner, title, body, token) {
 }
 
 function success(response) {
-  //render issue as link here, link to new url, title as text
+  var html = '<a href="' + response.html_url + '">' + response.title + '</a>';
+  $('#issue').append(html);
 }
 
 function bindSubmitButton() {
