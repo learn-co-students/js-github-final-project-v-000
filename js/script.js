@@ -6,7 +6,7 @@ function GithubInteractor(token){
   this.token = token;
 }
 
-var interactor = new GithubInteractor("YoudPutYourTokenHereInRealProduction")
+var interactor = new GithubInteractor("Token")
 
 function bindSubmitButton() {
   $('form').on('submit', function(event) {
