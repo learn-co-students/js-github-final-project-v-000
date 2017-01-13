@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function(){
   bindSubmitButton();
 });
@@ -12,9 +14,16 @@ function bindSubmitButton(){
   });
 };
 
+//var handleResponse = function(response) {
+//  debugger;
+//};
 function handleResponse(response) {
-  debugger;
+  $('#issue').append('<a href=' + response.html_url + '>' + response.title + '</a>')
 };
+
+function handleError(jqXHR, textStatus, errorThrown) {
+  console.log("Post error: " + errorThrown);
+}
 
 var createIssue = function(repoName, repoOwner, title, body){
   //debugger;
@@ -32,14 +41,13 @@ var createIssue = function(repoName, repoOwner, title, body){
     },
     data: JSON.stringify(data)
   }).done(function(response){
-    handleResponse(reponse);
+    handleResponse(response);
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    handleError(jqXHR, textStatus, errorThrown);
   });
+
 };
 
-
-
-class GithubInteractor {
-  constructor(token) {
+function GithubInteractor(token) {
     this.token = token;
-  };
 };
