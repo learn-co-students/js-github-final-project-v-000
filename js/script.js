@@ -1,39 +1,50 @@
-$(document).ready(function() {
-  // add click listener here
-  // it should call on fetchJSON()
-    $('input#submit').on('click', submitForm);
+'use strict';
+
+$(document).ready(function(){
+  bindSubmitButton();
 });
 
-function submitForm(){
-  createIssue();
+function bindSubmitButton(){
+  $('#submitButton').on('click', function(){
+    var repoName = $('#repoName').val();
+    var repoOwner = $('#repoOwner').val();
+    var issueTitle = $('#title').val();
+    var issueBody = $('#body').val();
+    createIssue(repoName, repoOwner, issueTitle, issueBody)
+  });
+};
+
+function handleResponse(response) {
+  $('#issue').append('<a href=' + response.html_url + '>' + response.title + '</a>')
+};
+
+function handleError(jqXHR, textStatus, errorThrown) {
+  console.log("Post error: " + errorThrown);
 }
 
+var createIssue = function(repoName, repoOwner, title, body){
+  //debugger;
+  var data = {
+    'title': title,
+    'body': body
+  };
 
-function createIssue(){
-//     $.post("/repos/:owner/:repo/issues",
-//     {
-//         name: "Donald Duck",
-//         city: "Duckburg"
-//     },
-//     function(data, status){
-//         alert("Data: " + data + "\nStatus: " + status);
-//     });
-}
+  $.ajax({
+    url: 'https://api.github.com/repos/' + repoOwner + "/" + repoName + '/issues',
+    type: 'POST',
+    dataType: 'json',
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "token " + "bf75154ddd99b460579614ab2f9fba83ed7341bc")
+    },
+    data: JSON.stringify(data)
+  }).done(function(response){
+    handleResponse(response);
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    handleError(jqXHR, textStatus, errorThrown);
+  });
 
+};
 
-
-
-function GithubInteractor(object){
-  var token = object
-  return token 
-} 
-
-
-
-function handleResponse(){
-
-}
-
-function handleError(){
-
-}
+function GithubInteractor(token) {
+    this.token = token;
+};
