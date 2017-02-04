@@ -1,10 +1,10 @@
 'use strict';
 
 $(document).ready(function(){
-  bindSubmitButton();
+  submitForm();
 });
 
-function bindSubmitButton(){
+function submitForm(){
   $('#submitButton').on('click', function(){
     var repoName = $('#repoName').val();
     var repoOwner = $('#repoOwner').val();
