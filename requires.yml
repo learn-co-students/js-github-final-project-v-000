@@ -7,3 +7,5 @@ javascripts:
     - spec/jasmine-jquery.js
     - spec/script_spec.js
     - spec/mock-ajax.js
+
+    
