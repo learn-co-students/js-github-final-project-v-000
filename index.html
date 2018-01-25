@@ -5,12 +5,12 @@
     <script src="js/script.js"></script>
 </head>
 <body>
-  <form>
+  <form id="issueForm">
     Repository Name:<input type="text" id="repoName">
     Repository Owner:<input type="text" id="repoOwner">
     Issue Title:<input type="text" id="title">
     Issue Body:<input type="text" id="body">
-    <input type="submit" value="submit">
+    <input type="submit" value="submit" onclick="submitForm()">
   </form>
   <div id="issue">
   </div>
