@@ -1,4 +1,4 @@
-var interactor = new GithubInteractor("6fbe62e9d1f8c5b93eca40363899eac7533d891a");
+var interactor = new GithubInteractor("592c4c561da8855558a26da1bc135f4212b578fe");//"7b083e8538f35b410f84bfa372db541ce87a5c14");
 
 $(document).ready(function() {
   submitForm();
